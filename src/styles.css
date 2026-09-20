@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@import "./specimens.css";
+
+@theme {
+  --color-bg: #0c0c0b;
+  --color-surface: #161614;
+  --color-surface-2: #1e1e1b;
+  --color-fg: #f2efe9;
+  --color-muted: #9a968c;
+  --color-subtle: #6e6b64;
+  --color-accent: #c8c4bb;
+  --color-accent-fg: #0c0c0b;
+  --color-border: #2a2a26;
+  --color-paper: #f2efe9;
+  --color-ink: #0c0c0b;
+  --color-danger: #8a2a24;
+  --color-ok: #1d3a28;
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius: 12px;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+
+  .dialog-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgb(8 8 7 / 0.78);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
