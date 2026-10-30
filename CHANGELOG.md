@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.0
+
+**Added**
+
+- Tailwind next to the CSS recipe. `src/lib/tailwind.ts` derives utilities from
+  the same declarations: states become variants, descendant rules become
+  `[&_span]:`, multi-element recipes are grouped by selector, and anything
+  without a named utility falls back to an arbitrary value. Covered by tests
+  across all 100 specimens.
+
+**Changed**
+
+- The recipe block is a two-format control (CSS / Tailwind); the copy button
+  copies the active format and names it in the live region.
+- README explains why CSS is the source of truth and Tailwind is a derivation.
+
 ## 1.0.0
 
 First release: the catalogue stands on its own.

@@ -39,6 +39,10 @@ Add the class to [`src/specimens.css`](../src/specimens.css). Rules of the house
 - no external assets, no images, no fonts beyond the three already loaded;
 - honour `prefers-reduced-motion` (the global reset already does most of it).
 
+The Tailwind tab is derived from `css` by [`src/lib/tailwind.ts`](../src/lib/tailwind.ts) —
+do not write a second version by hand. If a declaration converts badly, add a
+mapping there and a case in `tailwind.test.ts`.
+
 ## Before opening a PR
 
 ```bash

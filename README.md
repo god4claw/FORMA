@@ -92,7 +92,7 @@ numbers in each scene header link to the specimens they are built from.
 ## Features
 
 - **Live specimens** — every unit is interactive, not a static mock
-- **Copy CSS** — the recipe sits under the note; one click, announced to screen readers
+- **Copy CSS or Tailwind** — the recipe sits under the note, derived into utilities on demand; one click, announced to screen readers
 - **Permanent links** — `/s/<slug>` per specimen, with metadata for sharing
 - **Favorites** — bookmarks persist in the browser
 - **Search** — name, tag, Russian label, or number (`/` focuses the field)
@@ -167,12 +167,14 @@ src/
     specimens/live.tsx        The 100 live units
     specimen-frame.tsx        Card in the grid
     specimen-detail.tsx       Quick view: note, tags, CSS, prev/next
-    specimen-css.tsx          CSS recipe + copy with live-region feedback
+    specimen-css.tsx          Recipe in two formats: CSS and derived Tailwind
     specimen-grid.tsx         Search, shuffle, grid
     layout.tsx                Shell, nav
   lib/
     specimens.ts              Catalogue data, search, neighbours, paths
     specimens.test.ts         Unit tests for the above
+    tailwind.ts               CSS recipe → Tailwind utilities
+    tailwind.test.ts          Tests for the derivation, all 100 specimens
     favorites.ts              Zustand + persist
     site.ts                   Site name, description, absolute URLs
   styles.css                  Theme tokens
@@ -208,6 +210,20 @@ marker — never on the whole panel.
 
 The CSS under each card is a recipe, not a design-token dump. Steal the gesture
 (offset shadow, underscore, stamp) and restyle it in your own system.
+
+### Why CSS first, Tailwind second
+
+The specimens are authored in plain CSS on purpose: a catalogue of *form* should
+not require a particular toolchain to read. The Tailwind tab is a derivation of
+the same declarations — states become variants (`hover:`, `active:`,
+`data-[on=true]:`), descendant rules become `[&_span]:`, multi-element recipes are
+grouped by selector, and anything without a named utility falls back to an
+arbitrary value (`[inset:8px_-6px_auto]`). That means the two tabs can never
+disagree, and a new specimen needs no second version.
+
+What the derivation does not hide: `animation` still needs the keyframes from
+`specimens.css`, `content` only makes sense on `::before`/`::after`, and a font
+family resolves to the closest generic (`font-serif`).
 
 ## License
 
