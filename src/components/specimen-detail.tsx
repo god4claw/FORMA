@@ -4,6 +4,7 @@ import { ArrowUpRight, Bookmark, ChevronLeft, ChevronRight, X } from "lucide-rea
 import { useEffect, useRef } from "react";
 import { CATEGORIES, padId, SPECIMEN_BY_ID } from "@/lib/specimens";
 import { useFavorites } from "@/lib/favorites";
+import { behaviorOf } from "@/lib/behaviors";
 import { cn } from "@/lib/cn";
 import { SpecimenLive } from "@/components/specimens/live";
 import { SpecimenCss } from "@/components/specimen-css";
@@ -113,7 +114,11 @@ export function SpecimenDetail({
                     </span>
                   ))}
                 </div>
-                <SpecimenCss css={specimen.css} canvas={canvasRef} />
+                <SpecimenCss
+                  css={specimen.css}
+                  canvas={canvasRef}
+                  behavior={behaviorOf(specimen.id)}
+                />
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     type="button"

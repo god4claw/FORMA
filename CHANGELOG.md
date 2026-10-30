@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.0
+
+**Added**
+
+- A JS pane for the twelve specimens that actually hold state — switch,
+  segmented control, checkbox, radio cards, textarea counter, OTP, stepper, load
+  button, pair, removable chip, tabs, pagination. Each script is vanilla, scoped
+  to the specimen's own markup, and pairs with the HTML fragment, so
+  HTML + CSS + JS is a working artefact.
+- `src/lib/behaviors.ts` and its tests: coverage of the interactive set, no
+  imports/JSX/React in a snippet, every script scoped to a `.sp-*` root.
+- Every script verified in Chrome by pasting the HTML fragment plus the script
+  into an empty page and performing the interaction.
+
+**Changed**
+
+- The recipe block shows the JS tab only where a behaviour exists; the other
+  eighty-eight units stay CSS/Tailwind/HTML, because a script on a static button
+  would be filler.
+- README and CONTRIBUTING explain the split and the cost: the scripts are a
+  second source of truth next to `live.tsx`.
+
 ## 1.1.0
 
 **Added**

@@ -5,6 +5,7 @@ import { Shell } from "@/components/layout";
 import { SpecimenCss } from "@/components/specimen-css";
 import { SpecimenLive } from "@/components/specimens/live";
 import { useFavorites } from "@/lib/favorites";
+import { behaviorOf } from "@/lib/behaviors";
 import { CATEGORIES, SPECIMEN_BY_SLUG, neighborsOf, padId, specimenPath } from "@/lib/specimens";
 import { absoluteUrl } from "@/lib/site";
 
@@ -115,7 +116,11 @@ function SpecimenPage() {
               ))}
             </ul>
 
-            <SpecimenCss css={specimen.css} canvas={canvasRef} />
+            <SpecimenCss
+              css={specimen.css}
+              canvas={canvasRef}
+              behavior={behaviorOf(specimen.id)}
+            />
 
             <div className="mt-6 flex flex-wrap gap-2">
               <button

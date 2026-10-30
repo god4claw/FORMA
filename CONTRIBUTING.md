@@ -49,6 +49,23 @@ match the specimen. It has no unit tests (it needs a real stylesheet), so check
 it in a browser before opening a PR — open a specimen, switch to HTML, copy the
 fragment into an empty `.html` file and compare it with the card.
 
+## 4. If it holds state
+
+Add a vanilla script to [`src/lib/behaviors.ts`](../src/lib/behaviors.ts), keyed
+by the specimen id. Rules:
+
+- plain DOM, no framework, no build step — it runs in a `<script>` after the
+  HTML fragment;
+- scope it to the specimen's own root class (`.sp-*`), never `document.body`;
+- drive the same attributes the component drives (`data-on`, `aria-pressed`), so
+  the copied CSS keeps working;
+- keep it short. If the behaviour needs more than ~20 lines, it probably belongs
+  in the component, not in a snippet.
+
+`behaviors.test.ts` checks the shape and the coverage; the interaction itself is
+checked by pasting HTML + JS into an empty page and clicking. Do that before the
+PR — CI cannot run a browser.
+
 ## Before opening a PR
 
 ```bash

@@ -92,7 +92,7 @@ numbers in each scene header link to the specimens they are built from.
 ## Features
 
 - **Live specimens** — every unit is interactive, not a static mock
-- **Copy CSS, Tailwind or HTML** — the recipe sits under the note, derived into utilities on demand, and cut into a self-contained HTML fragment with its styles; one click, announced to screen readers
+- **Copy CSS, Tailwind, HTML or JS** — the recipe sits under the note, derived into utilities on demand, cut into a self-contained HTML fragment with its styles, and paired with a vanilla script where the unit actually has behaviour; one click, announced to screen readers
 - **Permanent links** — `/s/<slug>` per specimen, with metadata for sharing
 - **Favorites** — bookmarks persist in the browser
 - **Search** — name, tag, Russian label, or number (`/` focuses the field)
@@ -167,7 +167,7 @@ src/
     specimens/live.tsx        The 100 live units
     specimen-frame.tsx        Card in the grid
     specimen-detail.tsx       Quick view: note, tags, CSS, prev/next
-    specimen-css.tsx          Recipe in three formats: CSS, Tailwind, HTML
+    specimen-css.tsx          Recipe in up to four formats: CSS, Tailwind, HTML, JS
     specimen-grid.tsx         Search, shuffle, grid
     layout.tsx                Shell, nav
   lib/
@@ -176,6 +176,8 @@ src/
     tailwind.ts               CSS recipe → Tailwind utilities
     tailwind.test.ts          Tests for the derivation, all 100 specimens
     snippet.ts                Live DOM + matching rules → standalone HTML
+    behaviors.ts              Vanilla JS for the twelve units that hold state
+    behaviors.test.ts         Tests for the scripts' shape and coverage
     favorites.ts              Zustand + persist
     site.ts                   Site name, description, absolute URLs
   styles.css                  Theme tokens
@@ -190,8 +192,10 @@ public/
 
 Append to `SPECIMENS` in [`src/lib/specimens.ts`](src/lib/specimens.ts), draw it in
 [`src/components/specimens/live.tsx`](src/components/specimens/live.tsx), give it a
-class in [`src/specimens.css`](src/specimens.css). The tests check that ids, slugs
-and shelf ranges stay consistent.
+class in [`src/specimens.css`](src/specimens.css). If it holds state, add its
+vanilla script to [`src/lib/behaviors.ts`](src/lib/behaviors.ts) — otherwise the
+JS tab stays hidden. The tests check that ids, slugs and shelf ranges stay
+consistent.
 
 Details and house rules: [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -236,6 +240,22 @@ that `<style>` block. Paste it into an empty file and it looks like the card.
 It is a snapshot, not a component: state and handlers are not part of it. For
 behaviour, read `src/components/specimens/live.tsx` — the units are plain React
 components with local state.
+
+### JS, but only where the unit has behaviour
+
+Twelve of the hundred specimens hold state: switch, segmented control, checkbox,
+radio cards, textarea counter, OTP, stepper, load button, pair, removable chip,
+tabs, pagination. Those get a JS tab with a short vanilla script written against
+the markup the HTML tab prints, so HTML + CSS + JS is a working artefact, the
+way a pen is.
+
+The other eighty-eight are form, and a JS pane on a static button would be
+filler — so the tab does not exist there.
+
+The cost is honest: the scripts are a second source of truth next to
+`live.tsx`. Change an interaction and you change its script; the test file keeps
+the set in sync with the catalogue, and the scripts are checked by pasting
+HTML + JS into an empty page and clicking.
 
 ## License
 
