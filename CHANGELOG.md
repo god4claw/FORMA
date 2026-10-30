@@ -9,12 +9,17 @@
   `[&_span]:`, multi-element recipes are grouped by selector, and anything
   without a named utility falls back to an arbitrary value. Covered by tests
   across all 100 specimens.
+- A self-contained HTML fragment. `src/lib/snippet.ts` takes the rendered
+  specimen, keeps every rule that matches it, resolves the custom properties and
+  `@keyframes` those rules reference, and prints markup with its styles — ready
+  to paste into an empty file.
 
 **Changed**
 
-- The recipe block is a two-format control (CSS / Tailwind); the copy button
-  copies the active format and names it in the live region.
-- README explains why CSS is the source of truth and Tailwind is a derivation.
+- The recipe block is a three-format control (CSS / Tailwind / HTML); the copy
+  button copies the active format and names it in the live region.
+- README explains why CSS is the source of truth, how Tailwind and the HTML
+  fragment are derived, and what the fragment does not carry.
 
 ## 1.0.0
 

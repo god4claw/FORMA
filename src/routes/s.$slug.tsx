@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 import { Shell } from "@/components/layout";
 import { SpecimenCss } from "@/components/specimen-css";
 import { SpecimenLive } from "@/components/specimens/live";
@@ -57,6 +58,7 @@ function SpecimenMissing() {
 
 function SpecimenPage() {
   const specimen = Route.useLoaderData();
+  const canvasRef = useRef<HTMLDivElement>(null);
   const fav = useFavorites((s) => s.ids.includes(specimen.id));
   const toggle = useFavorites((s) => s.toggle);
   const category = CATEGORIES.find((c) => c.slug === specimen.category);
@@ -84,7 +86,10 @@ function SpecimenPage() {
           <span className="tabular-nums text-muted">{padId(specimen.id)}</span>
         </nav>
 
-        <div className={`sp-canvas sp-canvas-static mt-6 rounded-xl world-${specimen.world}`}>
+        <div
+          ref={canvasRef}
+          className={`sp-canvas sp-canvas-static mt-6 rounded-xl world-${specimen.world}`}
+        >
           <SpecimenLive id={specimen.id} />
         </div>
 
@@ -110,7 +115,7 @@ function SpecimenPage() {
               ))}
             </ul>
 
-            <SpecimenCss css={specimen.css} />
+            <SpecimenCss css={specimen.css} canvas={canvasRef} />
 
             <div className="mt-6 flex flex-wrap gap-2">
               <button

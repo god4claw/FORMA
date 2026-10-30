@@ -92,7 +92,7 @@ numbers in each scene header link to the specimens they are built from.
 ## Features
 
 - **Live specimens** — every unit is interactive, not a static mock
-- **Copy CSS or Tailwind** — the recipe sits under the note, derived into utilities on demand; one click, announced to screen readers
+- **Copy CSS, Tailwind or HTML** — the recipe sits under the note, derived into utilities on demand, and cut into a self-contained HTML fragment with its styles; one click, announced to screen readers
 - **Permanent links** — `/s/<slug>` per specimen, with metadata for sharing
 - **Favorites** — bookmarks persist in the browser
 - **Search** — name, tag, Russian label, or number (`/` focuses the field)
@@ -167,7 +167,7 @@ src/
     specimens/live.tsx        The 100 live units
     specimen-frame.tsx        Card in the grid
     specimen-detail.tsx       Quick view: note, tags, CSS, prev/next
-    specimen-css.tsx          Recipe in two formats: CSS and derived Tailwind
+    specimen-css.tsx          Recipe in three formats: CSS, Tailwind, HTML
     specimen-grid.tsx         Search, shuffle, grid
     layout.tsx                Shell, nav
   lib/
@@ -175,6 +175,7 @@ src/
     specimens.test.ts         Unit tests for the above
     tailwind.ts               CSS recipe → Tailwind utilities
     tailwind.test.ts          Tests for the derivation, all 100 specimens
+    snippet.ts                Live DOM + matching rules → standalone HTML
     favorites.ts              Zustand + persist
     site.ts                   Site name, description, absolute URLs
   styles.css                  Theme tokens
@@ -224,6 +225,17 @@ disagree, and a new specimen needs no second version.
 What the derivation does not hide: `animation` still needs the keyframes from
 `specimens.css`, `content` only makes sense on `::before`/`::after`, and a font
 family resolves to the closest generic (`font-serif`).
+
+### The HTML fragment
+
+The HTML tab is not hand-written either. It takes the rendered specimen, keeps
+every rule from the loaded stylesheets that actually matches it, pulls in the
+custom properties and `@keyframes` those rules reference, and prints markup with
+that `<style>` block. Paste it into an empty file and it looks like the card.
+
+It is a snapshot, not a component: state and handlers are not part of it. For
+behaviour, read `src/components/specimens/live.tsx` — the units are plain React
+components with local state.
 
 ## License
 

@@ -43,6 +43,12 @@ The Tailwind tab is derived from `css` by [`src/lib/tailwind.ts`](../src/lib/tai
 do not write a second version by hand. If a declaration converts badly, add a
 mapping there and a case in `tailwind.test.ts`.
 
+The HTML tab is derived from the rendered DOM by
+[`src/lib/snippet.ts`](../src/lib/snippet.ts): it keeps the stylesheet rules that
+match the specimen. It has no unit tests (it needs a real stylesheet), so check
+it in a browser before opening a PR — open a specimen, switch to HTML, copy the
+fragment into an empty `.html` file and compare it with the card.
+
 ## Before opening a PR
 
 ```bash

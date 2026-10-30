@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Bookmark, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { CATEGORIES, padId, SPECIMEN_BY_ID } from "@/lib/specimens";
 import { useFavorites } from "@/lib/favorites";
 import { cn } from "@/lib/cn";
@@ -26,6 +26,7 @@ export function SpecimenDetail({
   const specimen = id ? SPECIMEN_BY_ID.get(id) : undefined;
   const fav = useFavorites((s) => (id ? s.ids.includes(id) : false));
   const toggle = useFavorites((s) => s.toggle);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const index = specimen ? ids.indexOf(specimen.id) : -1;
   const total = ids.length;
   const canNav = total > 1 && index >= 0;
@@ -93,7 +94,7 @@ export function SpecimenDetail({
                   <X size={18} />
                 </Dialog.Close>
               </div>
-              <div className={cn("sp-canvas sp-canvas-quick", `world-${specimen.world}`)}>
+              <div ref={canvasRef} className={cn("sp-canvas sp-canvas-quick", `world-${specimen.world}`)}>
                 <SpecimenLive id={specimen.id} />
               </div>
               <div className="px-5 py-5">
@@ -112,7 +113,7 @@ export function SpecimenDetail({
                     </span>
                   ))}
                 </div>
-                <SpecimenCss css={specimen.css} />
+                <SpecimenCss css={specimen.css} canvas={canvasRef} />
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     type="button"
