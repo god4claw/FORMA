@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -10,8 +10,57 @@ import {
   Search,
 } from "lucide-react";
 import { Shell } from "@/components/layout";
+import { SPECIMEN_BY_ID, padId } from "@/lib/specimens";
+import { absoluteUrl } from "@/lib/site";
 
-export const Route = createFileRoute("/studio")({ component: Studio });
+export const Route = createFileRoute("/studio")({
+  component: Studio,
+  head: () => {
+    const title = "Студия — FORMA";
+    const description =
+      "Четыре сцены, где эталоны стоят рядом, а не в клетке каталога: редакционная полоса, панель документа, композер вложений, настройки макета.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: absoluteUrl("/studio") },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+      ],
+      links: [{ rel: "canonical", href: absoluteUrl("/studio") }],
+    };
+  },
+});
+
+/** The specimen numbers in a scene header, linked to their own pages. */
+function SceneIds({ ids }: { ids: number[] }) {
+  return (
+    <span className="flex items-center gap-1.5">
+      {ids.map((id, i) => {
+        const specimen = SPECIMEN_BY_ID.get(id);
+        return (
+          <span key={id} className="flex items-center gap-1.5">
+            {i > 0 ? <span aria-hidden>·</span> : null}
+            {specimen ? (
+              <Link
+                to="/s/$slug"
+                params={{ slug: specimen.slug }}
+                className="font-mono tabular-nums hover:text-fg"
+                title={specimen.name}
+              >
+                {padId(id)}
+              </Link>
+            ) : (
+              <span className="font-mono tabular-nums">{padId(id)}</span>
+            )}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
 
 function Studio() {
   const [seg, setSeg] = useState("Макет");
@@ -34,7 +83,7 @@ function Studio() {
           <article className="scene">
             <div className="scene-head">
               <h2>Редакционная полоса</h2>
-              <span>047 · 056 · 032</span>
+              <SceneIds ids={[47, 56, 32]} />
             </div>
             <div className="scene-body">
               <div className="rounded-lg bg-paper px-5 py-6 text-ink">
@@ -43,7 +92,8 @@ function Studio() {
                   Форма раньше цвета
                 </h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-subtle">
-                  Заголовок держит полосу. Кикер шепчет рубрику. Цитата слева — рейкой, не кавычками.
+                  Заголовок держит полосу. Кикер шепчет рубрику. Цитата слева — рейкой, не
+                  кавычками.
                 </p>
                 <blockquote className="mt-5 border-l-[3px] border-ink pl-4 font-display text-lg italic">
                   Радиус снаружи равен радиусу внутри плюс поле.
@@ -58,7 +108,7 @@ function Studio() {
           <article className="scene">
             <div className="scene-head">
               <h2>Панель документа</h2>
-              <span>001 · 024 · 043</span>
+              <SceneIds ids={[1, 24, 43]} />
             </div>
             <div className="scene-body">
               <div className="overflow-hidden rounded-lg bg-ink text-paper shadow-[0_0_0_1px_#ffffff14]">
@@ -96,7 +146,7 @@ function Studio() {
           <article className="scene">
             <div className="scene-head">
               <h2>Композер вложений</h2>
-              <span>063 · 064 · 017</span>
+              <SceneIds ids={[63, 64, 17]} />
             </div>
             <div className="scene-body">
               <div className="rounded-lg bg-surface-2 p-4">
@@ -141,7 +191,7 @@ function Studio() {
           <article className="scene">
             <div className="scene-head">
               <h2>Настройки макета</h2>
-              <span>084 · 085 · 098</span>
+              <SceneIds ids={[84, 85, 98]} />
             </div>
             <div className="scene-body">
               <div className="rounded-lg bg-paper p-4 text-ink">

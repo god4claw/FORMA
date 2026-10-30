@@ -856,6 +856,8 @@ function HPages() {
   );
 }
 
+// The lookup table is data, not a component: Fast Refresh is not a concern here.
+// eslint-disable-next-line react-refresh/only-export-components
 export const LIVE: Record<number, ComponentType> = {
   1: BtnInk,
   2: BtnHair,

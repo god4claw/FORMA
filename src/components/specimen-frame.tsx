@@ -1,9 +1,15 @@
+import { Link } from "@tanstack/react-router";
 import { Bookmark } from "lucide-react";
 import { CATEGORIES, padId, type Specimen } from "@/lib/specimens";
 import { useFavorites } from "@/lib/favorites";
 import { cn } from "@/lib/cn";
 import { SpecimenLive } from "@/components/specimens/live";
 
+/**
+ * A card in the grid. Clicking the canvas opens the quick view; the title is a
+ * real link to the specimen's page, so the same thing is reachable with a
+ * keyboard and crawlable by search engines.
+ */
 export function SpecimenFrame({
   specimen,
   onOpen,
@@ -28,22 +34,22 @@ export function SpecimenFrame({
         <SpecimenLive id={specimen.id} />
       </div>
       <div className="flex items-start gap-3 px-3.5 py-3">
-        <button
-          type="button"
-          onClick={() => onOpen(specimen.id)}
-          className="min-w-0 flex-1 text-left"
-        >
-          <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[11px] tabular-nums tracking-wider text-subtle">
-              {padId(specimen.id)}
+        <h3 className="min-w-0 flex-1 text-left">
+          <Link to="/s/$slug" params={{ slug: specimen.slug }} className="group block">
+            <span className="flex items-baseline gap-2">
+              <span className="font-mono text-[11px] tabular-nums tracking-wider text-subtle">
+                {padId(specimen.id)}
+              </span>
+              <span className="truncate text-sm font-medium leading-tight text-fg group-hover:underline group-hover:decoration-border group-hover:underline-offset-4">
+                {specimen.name}
+              </span>
             </span>
-            <h3 className="truncate text-sm font-medium leading-tight text-fg">{specimen.name}</h3>
-          </div>
-          <p className="mt-0.5 truncate text-xs text-muted">
-            {specimen.nameRu}
-            <span className="text-subtle"> · {cat?.label}</span>
-          </p>
-        </button>
+            <span className="mt-0.5 block truncate text-xs font-normal text-muted">
+              {specimen.nameRu}
+              <span className="text-subtle"> · {cat?.label}</span>
+            </span>
+          </Link>
+        </h3>
         <button
           type="button"
           onClick={() => toggle(specimen.id)}

@@ -12,6 +12,18 @@
   cursor: pointer;
 }
 
+/* On a specimen page the canvas is not a click target, and it gets more air. */
+.sp-canvas-static {
+  cursor: default;
+  min-height: 320px;
+  padding: 40px 24px;
+}
+
+/* Quick view in the grid dialog — shorter than the page canvas. */
+.sp-canvas-quick {
+  min-height: 220px;
+}
+
 .world-ink {
   background: #111110;
   color: #f2efe9;

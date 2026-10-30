@@ -6,10 +6,25 @@ import { SpecimenGrid } from "@/components/specimen-grid";
 import { CATEGORIES, SPECIMENS } from "@/lib/specimens";
 import { useFavorites } from "@/lib/favorites";
 import { cn } from "@/lib/cn";
+import { SITE_DESCRIPTION, SITE_TITLE, absoluteUrl } from "@/lib/site";
 
 type Filter = "all" | "fav" | (typeof CATEGORIES)[number]["slug"];
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+  component: Home,
+  head: () => ({
+    meta: [
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { property: "og:url", content: absoluteUrl("/") },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+    ],
+    links: [{ rel: "canonical", href: absoluteUrl("/") }],
+  }),
+});
 
 function Home() {
   const [query, setQuery] = useState("");
@@ -102,7 +117,9 @@ function Home() {
             >
               {label}
               {key === "fav" && favIds.length > 0 ? (
-                <span className="ml-1.5 font-mono text-xs tabular-nums opacity-70">{favIds.length}</span>
+                <span className="ml-1.5 font-mono text-xs tabular-nums opacity-70">
+                  {favIds.length}
+                </span>
               ) : null}
             </button>
           ))}
@@ -112,7 +129,9 @@ function Home() {
           query={query}
           onQuery={setQuery}
           shuffleSignal={shuffleSignal}
-          emptyHint={filter === "fav" ? "Пока пусто — отметьте эталоны закладкой." : "Ничего не нашлось."}
+          emptyHint={
+            filter === "fav" ? "Пока пусто — отметьте эталоны закладкой." : "Ничего не нашлось."
+          }
         />
       </section>
     </Shell>

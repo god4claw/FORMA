@@ -59,10 +59,18 @@ export function SpecimenGrid({
               onChange={(e) => onQuery(e.target.value)}
               placeholder="Поиск по имени, тегу, номеру"
               aria-label="Поиск по имени, тегу, номеру"
+              aria-keyshortcuts="/"
               className="h-full min-w-0 flex-1 bg-transparent text-sm text-fg outline-none placeholder:text-subtle"
             />
-            <span className="hidden font-mono text-xs tabular-nums text-subtle sm:inline" aria-hidden>
-              {String(list.length).padStart(3, "0")}
+            <span className="hidden items-center gap-2 sm:flex" aria-hidden>
+              <span className="font-mono text-xs tabular-nums text-subtle">
+                {String(list.length).padStart(3, "0")}
+              </span>
+              {query ? null : (
+                <kbd className="rounded border border-border px-1.5 py-0.5 font-mono text-[11px] leading-none text-subtle">
+                  /
+                </kbd>
+              )}
             </span>
           </div>
           <button
@@ -91,7 +99,12 @@ export function SpecimenGrid({
         </div>
       )}
 
-      <SpecimenDetail id={openId} ids={ids.length ? ids : openId ? [openId] : []} onClose={() => setOpenId(null)} onChange={setOpenId} />
+      <SpecimenDetail
+        id={openId}
+        ids={ids.length ? ids : openId ? [openId] : []}
+        onClose={() => setOpenId(null)}
+        onChange={setOpenId}
+      />
     </div>
   );
 }

@@ -1209,6 +1209,24 @@ export function specimensInCategory(slug: CategorySlug) {
   return SPECIMENS.filter((s) => s.category === slug);
 }
 
+/** Canonical, shareable address of a single specimen. */
+export function specimenPath(specimen: Pick<Specimen, "slug">) {
+  return `/s/${specimen.slug}`;
+}
+
+/** Previous / next specimen inside the same shelf, wrapping at the edges. */
+export function neighborsOf(id: number): { prev?: Specimen; next?: Specimen } {
+  const specimen = SPECIMEN_BY_ID.get(id);
+  if (!specimen) return {};
+  const shelf = specimensInCategory(specimen.category);
+  const index = shelf.findIndex((s) => s.id === id);
+  if (index < 0) return {};
+  return {
+    prev: shelf[(index - 1 + shelf.length) % shelf.length],
+    next: shelf[(index + 1) % shelf.length],
+  };
+}
+
 export function searchSpecimens(query: string, list: Specimen[] = SPECIMENS) {
   const q = query.trim().toLowerCase();
   if (!q) return list;
