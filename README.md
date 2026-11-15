@@ -1,5 +1,3 @@
-IN BETA
-
 <p align="center">
   <img src="public/og.jpg" alt="FORMA — a museum of 100 UI specimens" width="840" />
 </p>
