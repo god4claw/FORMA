@@ -34,10 +34,6 @@ FORMA is a field catalogue of interface form. Every specimen is a working contro
 in its own visual world: press it, copy its CSS recipe, keep it in favourites, or
 open its own page and share the link.
 
-<p align="center">
-  <img src="docs/catalog.png" alt="FORMA catalog grid" width="840" />
-</p>
-
 No accounts, no database, no tracking. Favourites live in `localStorage`.
 
 ## Catalog
